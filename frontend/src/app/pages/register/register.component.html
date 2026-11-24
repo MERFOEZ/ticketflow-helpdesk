@@ -1,0 +1,22 @@
+<div class="box">
+  <h2>Register</h2>
+
+  <form (ngSubmit)="register()">
+    <label>Full Name</label>
+    <input type="text" name="fullName" [(ngModel)]="fullName">
+
+    <label>Email</label>
+    <input type="email" name="email" [(ngModel)]="email">
+
+    <label>Password</label>
+    <input type="password" name="password" [(ngModel)]="password">
+
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+
+    <button type="submit">Register</button>
+  </form>
+
+  <p>Already have an account? <a routerLink="/login">Login</a></p>
+</div>

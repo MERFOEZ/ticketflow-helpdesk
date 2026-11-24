@@ -1,0 +1,81 @@
+<h2>Dashboard</h2>
+
+<div class="cards">
+  <div class="card">
+    <p>Total Tickets</p>
+    <h1>{{ totalCount }}</h1>
+  </div>
+  <div class="card">
+    <p>Open</p>
+    <h1>{{ openCount }}</h1>
+  </div>
+  <div class="card">
+    <p>Closed</p>
+    <h1>{{ closedCount }}</h1>
+  </div>
+</div>
+
+<div class="filters">
+  <input type="text" placeholder="Search by title..." [(ngModel)]="search">
+
+  <select [(ngModel)]="statusFilter">
+    <option value="">All Status</option>
+    <option value="Open">Open</option>
+    <option value="In Progress">In Progress</option>
+    <option value="Resolved">Resolved</option>
+  </select>
+
+  <select [(ngModel)]="priorityFilter">
+    <option value="">All Priority</option>
+    <option value="Urgent">Urgent</option>
+    <option value="Medium">Medium</option>
+    <option value="Normal">Normal</option>
+  </select>
+</div>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Title</th>
+    <th>Employee</th>
+    <th>Priority</th>
+    <th>Status</th>
+    <th>Date</th>
+    <th></th>
+  </tr>
+  @for (t of filteredTickets; track t.id) {
+    <tr>
+      <td>{{ t.id }}</td>
+      <td>
+        <b>{{ t.title }}</b><br>
+        <small>{{ t.description }}</small>
+      </td>
+      <td>{{ t.userName }}</td>
+      <td>{{ t.priority }}</td>
+      <td>{{ t.status }}</td>
+      <td>{{ t.createdAt | date:'short' }}</td>
+      <td><button (click)="selectTicket(t)">Update</button></td>
+    </tr>
+  } @empty {
+    <tr><td colspan="7">No tickets found</td></tr>
+  }
+</table>
+
+@if (selected) {
+  <div class="box wide update-box">
+    <h3>Update Ticket #{{ selected.id }} - {{ selected.title }}</h3>
+
+    <label>Status</label>
+    <select [(ngModel)]="newStatus">
+      <option value="Open">Open</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Resolved">Resolved</option>
+    </select>
+
+    <label>Reply</label>
+    <textarea rows="3" [(ngModel)]="reply"></textarea>
+
+    <button (click)="saveTicket()">Save</button>
+    <button class="gray" (click)="selected = null">Cancel</button>
+  </div>
+}

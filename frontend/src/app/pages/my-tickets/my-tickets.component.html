@@ -1,0 +1,52 @@
+<h2>New Ticket</h2>
+
+<div class="box wide">
+  <form (ngSubmit)="addTicket()">
+    <label>Title</label>
+    <input type="text" name="title" [(ngModel)]="title">
+
+    <label>Description</label>
+    <textarea name="description" rows="4" [(ngModel)]="description"></textarea>
+
+    <label>Priority</label>
+    <select name="priority" [(ngModel)]="priority">
+      <option value="Urgent">Urgent</option>
+      <option value="Medium">Medium</option>
+      <option value="Normal">Normal</option>
+    </select>
+
+    @if (message) {
+      <p>{{ message }}</p>
+    }
+
+    <button type="submit">Send Ticket</button>
+  </form>
+</div>
+
+<h2>My Tickets</h2>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Title</th>
+    <th>Priority</th>
+    <th>Status</th>
+    <th>Reply</th>
+    <th>Date</th>
+  </tr>
+  @for (t of tickets; track t.id) {
+    <tr>
+      <td>{{ t.id }}</td>
+      <td>
+        <b>{{ t.title }}</b><br>
+        <small>{{ t.description }}</small>
+      </td>
+      <td>{{ t.priority }}</td>
+      <td>{{ t.status }}</td>
+      <td>{{ t.reply || '-' }}</td>
+      <td>{{ t.createdAt | date:'short' }}</td>
+    </tr>
+  } @empty {
+    <tr><td colspan="6">No tickets yet</td></tr>
+  }
+</table>

@@ -1,0 +1,11 @@
+@if (auth.isLoggedIn()) {
+  <div class="navbar">
+    <span class="logo">IT HelpDesk</span>
+    <span>Welcome, {{ auth.getName() }} ({{ auth.getRole() }})</span>
+    <button (click)="auth.logout()">Logout</button>
+  </div>
+}
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
